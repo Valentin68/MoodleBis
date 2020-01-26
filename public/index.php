@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>	
 <body>
-	<h1>Bienvenue sur <?php echo $sitename ?> !</h1>
+	<h1>Bienvenue sur le site <?php echo $sitename ?> !</h1>
 	<a href="test">Suite</a>
 </body>
 </html>
