@@ -11,5 +11,6 @@
 </head>	
 <body>
 	<h1>Bienvenue sur <?php echo $sitename ?> !</h1>
+	<a href="test">Suite</a>
 </body>
 </html>
