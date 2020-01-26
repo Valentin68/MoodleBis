@@ -13,10 +13,10 @@ For Windows users (using WAMP) :
 2) Then add a folder named "private" in the website root folder
 3) In this folder, create a new file "config.ini", and copy-paste the following content (replace "[your_db_...]" with your own databse credentials) :
 	*******************
-	[database]
-	servername = localhost
-	username = [your_db_username]
-	password = [your_db_password]
+	[database]</br>
+	servername = localhost</br>
+	username = [your_db_username]</br>
+	password = [your_db_password]</br>
 	dbname = MoodleBis
 	*******************
 4) Please note that a .htaccess is present in the website root to delete ".php" extension of website files. Thus, simply refer to those files without the .php extension, when writing a new page.
