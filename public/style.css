@@ -42,3 +42,15 @@
 [data-tip]:hover:after {
 	display:block;
 }
+
+.success{
+	color: green;
+}
+
+.fail{
+	color: red;
+}
+
+.warn{
+	color: #ff5733;
+}
