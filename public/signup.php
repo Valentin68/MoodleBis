@@ -17,10 +17,11 @@ session_start();
 		$('#department').change(function(){
 			var dpt_id=$('#department').val();
 			var mjr_sel = document.getElementById("major");
-			mjr_sel.style.display="inline-block";
+			var mjr_lbl = document.getElementById("major_sel");
+			mjr_lbl.style.display="inline-block";
 			mjr_sel.required = true;
 			if(dpt_id.localeCompare("1")==0){
-				mjr_sel.style.display="none";
+				mjr_lbl.style.display="none";
 				mjr_sel.required = false;
 			}
 			$('#major').empty();
@@ -236,21 +237,31 @@ session_start();
 					"major_ID" => clean_input($selected_major),
 					"promo" => clean_input($_POST['promo'])
 				));
-
+				$NewStudentID = $bdd->lastInsertId();
+				$tokhash = md5( rand(0,1000));
+				$ExpiryDate = new DateTime();
+				$ExpiryDate->add(new DateInterval('P10D'));
+				$insertToken = $bdd->prepare("INSERT INTO activation_tokens(student_ID, hash, expiry_date) VALUES (:newstudentid, :tokhash, :expdate)");
+				$insertToken->execute(array(
+					"newstudentid" => $NewStudentID,
+					"tokhash" => $tokhash,
+					"expdate" => $ExpiryDate->format("Y-m-d H:i:s")
+				));
+				$tokenid = $bdd->lastInsertId();
 				$conf = parse_ini_file("../private/config.ini");
 				$mailaddress = $conf['from'];
-
+				
 				//**** PROCEED TO ACCOUNT ACTIVATION EMAIL SENDING
 				$to = $_POST['utbm_mail'];
-				$subject = "MoodleBis | Activation de ton compte";
-				$message = "<html><h1>Bienvenue sur MoodleBis !</h1></br><br>
+				$subject = "Pyl-One | Activation de ton compte";
+				$message = "<html><h1>Bienvenue sur Pyl-One !</h1></br><br>
 				Ton compte a été créé avec succès avec le pseudo suivant : <b>".$_POST['pseudo']."</b><br><br>
 				--------------------------<br>
-				Pour activer ton compte, clique <a href=\"http://localhost/MoodleBis/public/verify?pseudo=".$_POST['pseudo']."&hash=".$passhash."\">ici</a> ou copie-colle le lien suivant : <br>
-				http://localhost/MoodleBis/public/verify?pseudo=".$_POST['pseudo']."&hash=".$passhash."<br>
+				Pour activer ton compte, clique <a href=\"http://localhost/PylOne/public/verify?token=".$tokenid."&hash=".$tokhash."\"><b>ici</b></a> ou copie-colle le lien suivant dans ton navigateur : <br>
+				http://localhost/PylOne/public/verify?token=".$tokenid."&hash=".$tokhash."<br>
 				--------------------------<br>
 				<br>
-
+				<b>Attention, ce lien expirera dans 10 minutes !</b><br>
 				<u>P.S. :</u> Si tu as décoché l'option \"<i>Je souhaite recevoir mes notifications sur cette adresse</i>\", ton adresse mail UTBM sera détruite une fois ton compte activé.</br></br>
 				</html>";
 
@@ -263,7 +274,7 @@ session_start();
 
 				echo '<h2 class="success">Ton compte a bien été créé</h2>
 				<p class="success">
-				il ne te reste plus qu\'à l\'activer grâce au lien contenu dans le mail que tu viens de recevoir sur ta messagerie UTBM ! Si tu n\'as pas reçu le mail d\'activation, assure toi qu\'il n\'est pas dans un dossier d\'indésirables, et clique <a href="#">ici</a> pour en renvoyer un.</p>';	
+				Il ne te reste plus qu\'à l\'activer dans les 10 prochaines minutes grâce au lien contenu dans le mail que tu viens de recevoir sur ta messagerie UTBM ! Si tu n\'as pas reçu le mail d\'activation, assure toi qu\'il n\'est pas dans un dossier d\'indésirables, et clique <a href="#">ici</a> pour en renvoyer un.</p>';	
 			}
 		}
 		else{
