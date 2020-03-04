@@ -1,4 +1,4 @@
-# MoodleBis
+# Pyl-One
 Le site de gestion des notes et de partage de documents dédié aux étudiants UTBM, ouvert en écriture
 
 This is the source code of the UTBM's students website allowing grades management and documents sharing.
@@ -17,7 +17,7 @@ In order to developp, test or simply use the website, here are some instructions
 	servername = localhost</br>
 	username = [your_db_username]</br>
 	password = [your_db_password]</br>
-	dbname = MoodleBis
+	dbname = PylOne
 	*******************
 4) Please note that a .htaccess is present in the website root to delete ".php" extension of website files. Thus, simply refer to those files without the .php extension, when writing a new page.
 
