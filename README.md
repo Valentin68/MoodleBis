@@ -3,7 +3,7 @@ Le site de gestion des notes et de partage de documents dédié aux étudiants U
 
 This is the source code of the UTBM's students website allowing grades management and documents sharing.
 
-This website is actually under construction, and will firstly be available as a crash test for the twentieth promotion of UTBM students.
+This website is actually under construction, and will firstly be available as a beta test for the twentieth promotion of UTBM students.
 
 # Localhost
 In order to developp, test or simply use the website, here are some instructions to host it locally, especially with the right database structure :
